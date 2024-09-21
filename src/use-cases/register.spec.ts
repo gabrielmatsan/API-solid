@@ -1,16 +1,20 @@
-import { expect, describe, it } from 'vitest'
+import { expect, describe, it, beforeEach } from 'vitest'
 import { RegisterUseCase } from './register'
 import { compare } from 'bcryptjs'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repositoy'
 import { UserAlreadyExistsError } from './errors/user-already-exists-error'
 
+// Starts the variables
+let usersRepository: InMemoryUsersRepository
+let sut: RegisterUseCase
 describe('Register user space', () => {
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    sut = new RegisterUseCase(usersRepository)
+  })
   // Unit test
   it('should hash user password upon registration', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(usersRepository)
-
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'john.doe@gmail.com',
       password: 'flamengo',
@@ -25,19 +29,16 @@ describe('Register user space', () => {
   })
 
   it('shouldn`t be able to register with same email twice', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(usersRepository)
-
     const email = 'john.doe@gmail.com'
 
-    await registerUseCase.execute({
+    await sut.execute({
       name: 'John Doe',
       email,
       password: 'flamengo',
     })
 
     await expect(() =>
-      registerUseCase.execute({
+      sut.execute({
         name: 'John Doe',
         email,
         password: 'flamengo',
@@ -45,10 +46,7 @@ describe('Register user space', () => {
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
   it('should be able to register an account', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUseCase = new RegisterUseCase(usersRepository)
-
-    const { user } = await registerUseCase.execute({
+    const { user } = await sut.execute({
       name: 'John Doe',
       email: 'john.doe@gmail.com',
       password: 'flamengo',
