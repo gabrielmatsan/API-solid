@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto'
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
+  // erro aqui
 
   async findById(id: string) {
     const user = this.items.find((item) => item.id === id)
