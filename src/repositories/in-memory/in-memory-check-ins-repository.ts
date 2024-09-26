@@ -4,6 +4,7 @@ import { randomUUID } from 'node:crypto'
 import dayjs from 'dayjs'
 
 export class InMemoryCheckInsRepository implements CheckInsRepository {
+  // teste para ci
   public items: CheckIn[] = []
 
   async findByUserIdOnDate(userId: string, date: Date) {
