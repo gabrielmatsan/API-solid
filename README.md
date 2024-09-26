@@ -21,8 +21,8 @@
 - [x] O usuário não pode fazer o check-in 2 vezes ou mais no mesmo dia;
 - [x] O usuário não pode fazer o check-in se não estiver perto(100m) da academia;
 - [x] O check-in só pode ser validado até 20 minutos após criado;
-- [ ] O check-in só pode ser validado por administradores.
-- [ ] A academia só pode ser cadastrada por administradores.
+- [x] O check-in só pode ser validado por administradores.
+- [x] A academia só pode ser cadastrada por administradores.
 
 ## RNFs (Requisitos Não Funcionais)
 
